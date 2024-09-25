@@ -16,13 +16,9 @@ const jumpForce = 6
 const cornerRadius = 10
 const speed = 5
 
-const obstacles = [
-    {
-        posX: 200,
-        spaceTop: 100,
-        spaceBottom: 200,
-    },
-]
+let obstacles = []
+let obstacleGapHeight = 200
+const obstcleSpacing = 400
 
 let isGameRunning = false
 let interval
@@ -51,21 +47,36 @@ function drawObstacle(obstacle) {
 
     // bottom
     ctx.beginPath()
-    ctx.roundRect(
-        obstacle.posX,
-        height - obstacle.spaceBottom,
-        player.width,
-        obstacle.spaceBottom,
-        [cornerRadius, cornerRadius, 0, 0]
-    )
+    ctx.roundRect(obstacle.posX, obstacle.spaceBottom, player.width, height, [
+        cornerRadius,
+        cornerRadius,
+        0,
+        0,
+    ])
     ctx.stroke()
     ctx.fill()
+}
+
+function spawnObstacle(posX) {
+    const spaceTop =
+        Math.floor(Math.random() * (height - 100 - obstacleGapHeight)) + 50 // min is 50
+
+    const spaceBottom = spaceTop + obstacleGapHeight
+
+    const newObstacle = {
+        posX,
+        spaceTop,
+        spaceBottom,
+    }
+
+    obstacles.push(newObstacle)
 }
 
 function updateObstacles() {
     for (let obstacle of obstacles) {
         if (obstacle.posX < -50) {
             obstacles.shift()
+            spawnObstacle(3 * obstcleSpacing)
         } else {
             obstacle.posX -= speed
         }
@@ -94,7 +105,6 @@ function drawPlayer() {
 }
 
 function jump() {
-    console.log("jump", obstacles.length)
     if (!isGameRunning) {
         isGameRunning = true
         interval = setInterval(update, 20)
@@ -106,6 +116,9 @@ function start() {
     clear()
     player.posY = height / 3
     drawPlayer()
+
+    obstacles = []
+    new Array(1, 2, 3).forEach((i) => spawnObstacle(i * obstcleSpacing))
     drawObstacles()
 
     document.body.onkeyup = function (e) {
