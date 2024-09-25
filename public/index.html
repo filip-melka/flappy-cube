@@ -4,8 +4,26 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Flappy Cube</title>
+        <link rel="stylesheet" href="css/index.css" />
     </head>
     <body>
-        <canvas></canvas>
+        <nav>
+            <img src="img/logo.svg" alt="Logo" />
+            <div>
+                <p id="best-container">Best: <span id="best">20</span></p>
+                <a href="/" id="medium-link">
+                    <span>About</span>
+                    <img src="img/medium.svg" alt="Medium" />
+                </a>
+            </div>
+        </nav>
+        <main>
+            <div id="game">
+                <p id="score">3</p>
+                <div class="border"></div>
+                <canvas></canvas>
+                <div class="border"></div>
+            </div>
+        </main>
     </body>
 </html>

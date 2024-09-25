@@ -1,0 +1,105 @@
+:root {
+    --primary: #716fe5;
+    --primary-dark: #4341a4;
+    --white: white;
+    --text: rgb(42, 42, 42);
+    --canvas-width: 600px;
+}
+
+body {
+    font-family: sans-serif;
+    background: var(--primary);
+    color: var(--white);
+    margin: 0;
+}
+
+nav {
+    margin: 0 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 6rem;
+}
+
+nav > img {
+    height: 40px;
+}
+
+nav > div {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+#best-container {
+    font-weight: 600;
+}
+
+#medium-link {
+    background: var(--white);
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 2px 2px 2px 12px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 15px;
+}
+#medium-link img {
+    height: 24px;
+}
+
+main {
+    min-height: calc(100vh - 6rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 6rem;
+    box-sizing: border-box;
+}
+
+#score {
+    font-size: 3rem;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+#game {
+    text-align: center;
+}
+
+.border {
+    background: var(--primary-dark);
+    width: calc(var(--canvas-width) + 40px);
+    height: 20px;
+    border-radius: 10px;
+}
+
+canvas {
+    width: var(--canvas-width);
+    height: calc(var(--canvas-width) * 0.6);
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom;
+}
+
+@media screen and (max-width: 800px) {
+    :root {
+        --canvas-width: 450px;
+    }
+
+    .border {
+        height: 14px;
+        border-radius: 7px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    :root {
+        --canvas-width: 350px;
+    }
+}
