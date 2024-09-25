@@ -17,7 +17,7 @@ const cornerRadius = 10
 const speed = 5
 
 let obstacles = []
-let obstacleGapHeight = 200
+let obstacleGapHeight = 400
 const obstcleSpacing = 400
 
 let isGameRunning = false
@@ -163,4 +163,15 @@ function updatePlayer() {
     } else {
         player.posY += player.velocityY
     }
+
+    obstacles.forEach((obstacle) => {
+        if (Math.abs(player.posX - obstacle.posX) <= player.width) {
+            if (
+                player.posY <= obstacle.spaceTop ||
+                player.posY >= obstacle.spaceBottom - player.height
+            ) {
+                console.log("collision")
+            }
+        }
+    })
 }
