@@ -14,7 +14,7 @@ const colors = {
 const gravity = 0.12
 const jumpForce = 6
 const cornerRadius = 10
-const speed = 10
+const speed = 5
 
 const obstacles = [
     {
@@ -62,6 +62,16 @@ function drawObstacle(obstacle) {
     ctx.fill()
 }
 
+function updateObstacles() {
+    for (let obstacle of obstacles) {
+        if (obstacle.posX < -50) {
+            obstacles.shift()
+        } else {
+            obstacle.posX -= speed
+        }
+    }
+}
+
 function drawObstacles() {
     for (let obstacle of obstacles) {
         drawObstacle(obstacle)
@@ -84,7 +94,7 @@ function drawPlayer() {
 }
 
 function jump() {
-    console.log("jumo")
+    console.log("jump", obstacles.length)
     if (!isGameRunning) {
         isGameRunning = true
         interval = setInterval(update, 20)
@@ -122,6 +132,8 @@ function gameOver() {
 
 function update() {
     clear()
+    updateObstacles()
+    drawObstacles()
     updatePlayer()
     drawPlayer()
 }
