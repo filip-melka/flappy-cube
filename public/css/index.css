@@ -71,6 +71,7 @@ main {
 
 #game {
     text-align: center;
+    display: none;
 }
 
 .border {
@@ -86,6 +87,41 @@ canvas {
     margin: 0;
     padding: 0;
     vertical-align: bottom;
+}
+
+/* QR Code */
+#qr-code {
+    width: 200px;
+    height: 200px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    opacity: 0;
+    transform: scale(0.5);
+    animation-name: popup-grow;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-delay: 200ms;
+}
+
+@keyframes popup-grow {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    70% {
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @media screen and (max-width: 800px) {

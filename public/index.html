@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Flappy Cube</title>
         <link rel="stylesheet" href="css/index.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
         <script src="js/index.js" defer></script>
         <script src="js/game.js" defer></script>
     </head>
@@ -20,12 +21,15 @@
             </div>
         </nav>
         <main>
+            <!-- Game -->
             <div id="game">
                 <p id="score">0</p>
                 <div class="border"></div>
                 <canvas></canvas>
                 <div class="border"></div>
             </div>
+            <!-- QR Code -->
+            <div id="qr-code"></div>
         </main>
     </body>
 </html>
