@@ -1,11 +1,14 @@
 const width = 1000
 const height = 600
 const canvas = document.querySelector("canvas")
+
 canvas.height = height
 canvas.width = width
+
 const ctx = canvas.getContext("2d")
 const colors = {
     player: "white",
+    obstacle: "#bbb",
 }
 
 const gravity = 0.12
@@ -30,6 +33,39 @@ const player = {
     posY: height / 3,
     posX: 100,
     velocityY: 0,
+}
+
+function drawObstacle(obstacle) {
+    ctx.fillStyle = colors.obstacle
+    ctx.strokeStyle = "transparent"
+    // top
+    ctx.beginPath()
+    ctx.roundRect(obstacle.posX, 0, player.width, obstacle.spaceTop, [
+        0,
+        0,
+        cornerRadius,
+        cornerRadius,
+    ])
+    ctx.stroke()
+    ctx.fill()
+
+    // bottom
+    ctx.beginPath()
+    ctx.roundRect(
+        obstacle.posX,
+        height - obstacle.spaceBottom,
+        player.width,
+        obstacle.spaceBottom,
+        [cornerRadius, cornerRadius, 0, 0]
+    )
+    ctx.stroke()
+    ctx.fill()
+}
+
+function drawObstacles() {
+    for (let obstacle of obstacles) {
+        drawObstacle(obstacle)
+    }
 }
 
 function drawPlayer() {
@@ -60,6 +96,7 @@ function start() {
     clear()
     player.posY = height / 3
     drawPlayer()
+    drawObstacles()
 
     document.body.onkeyup = function (e) {
         if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
