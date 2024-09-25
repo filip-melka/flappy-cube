@@ -42,13 +42,14 @@ nav > div {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 2px 2px 2px 12px;
-    border-radius: 5px;
+    padding: 3px 3px 3px 12px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
 }
+
 #medium-link img {
-    height: 24px;
+    height: 20px;
 }
 
 main {
@@ -74,7 +75,7 @@ main {
 
 .border {
     background: var(--primary-dark);
-    width: calc(var(--canvas-width) + 40px);
+    width: calc(var(--canvas-width) + 20px);
     height: 20px;
     border-radius: 10px;
 }
