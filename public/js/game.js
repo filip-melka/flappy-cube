@@ -1,6 +1,8 @@
 const width = 1000
 const height = 600
 const canvas = document.querySelector("canvas")
+const scoreDisplay = document.getElementById("score")
+const bestScoreDisplay = document.getElementById("best")
 
 canvas.height = height
 canvas.width = width
@@ -8,7 +10,7 @@ canvas.width = width
 const ctx = canvas.getContext("2d")
 const colors = {
     player: "white",
-    obstacle: "#bbb",
+    obstacle: "#ccc",
 }
 
 const gravity = 0.12
@@ -21,7 +23,12 @@ let obstacleGapHeight = 400
 const obstcleSpacing = 400
 
 let isGameRunning = false
+let isGameReady = true
 let interval
+
+let score = 0
+let bestScore = localStorage.getItem("bestScore") || 0
+updateBestScoreDisplay()
 
 const player = {
     width: 100,
@@ -29,6 +36,14 @@ const player = {
     posY: height / 3,
     posX: 100,
     velocityY: 0,
+}
+
+function updateScoreDisplay() {
+    scoreDisplay.innerText = score
+}
+
+function updateBestScoreDisplay() {
+    bestScoreDisplay.innerText = bestScore
 }
 
 function drawObstacle(obstacle) {
@@ -67,6 +82,7 @@ function spawnObstacle(posX) {
         posX,
         spaceTop,
         spaceBottom,
+        isScored: false,
     }
 
     obstacles.push(newObstacle)
@@ -105,14 +121,19 @@ function drawPlayer() {
 }
 
 function jump() {
-    if (!isGameRunning) {
-        isGameRunning = true
-        interval = setInterval(update, 20)
+    if (isGameReady) {
+        if (!isGameRunning) {
+            isGameRunning = true
+            updateScoreDisplay()
+            interval = setInterval(update, 20)
+        }
+        player.velocityY = -jumpForce
     }
-    player.velocityY = -jumpForce
 }
 
 function start() {
+    score = 0
+
     clear()
     player.posY = height / 3
     drawPlayer()
@@ -120,6 +141,8 @@ function start() {
     obstacles = []
     new Array(1, 2, 3).forEach((i) => spawnObstacle(i * obstcleSpacing))
     drawObstacles()
+
+    isGameReady = true
 
     document.body.onkeyup = function (e) {
         if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
@@ -136,8 +159,16 @@ function clear() {
 
 function gameOver() {
     console.log("game over")
+    isGameReady = false
     isGameRunning = false
     clearInterval(interval)
+
+    if (score > bestScore) {
+        bestScore = score
+        localStorage.setItem("bestScore", bestScore)
+        updateBestScoreDisplay()
+    }
+
     setTimeout(() => {
         start()
     }, 1000)
@@ -172,6 +203,12 @@ function updatePlayer() {
             ) {
                 console.log("collision")
             }
+        }
+
+        if (obstacle.posX < player.posX - player.width && !obstacle.isScored) {
+            obstacle.isScored = true
+            score++
+            updateScoreDisplay()
         }
     })
 }
