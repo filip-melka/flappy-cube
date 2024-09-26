@@ -1,10 +1,14 @@
 const socket = io()
 const statusDisplay = document.getElementById("connection-status")
+const enableMotionContainer = document.getElementById("enable-container")
+const enableMotionButton = document.getElementById("enable-btn")
 const peerConnection = new RTCPeerConnection({
     iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 })
+const motionThreshold = 15
 
 let dataChannel
+let isFlickDetected = false
 
 socket.on("connect", () => {
     const urlParams = new URLSearchParams(window.location.search)
@@ -34,6 +38,7 @@ socket.on("disconnected", () => {
 function createDataChannel() {
     dataChannel = peerConnection.createDataChannel("channel")
     dataChannel.onopen = () => {
+        showEnableButton()
         document.addEventListener("click", () => {
             dataChannel.send("jump")
         })
@@ -63,3 +68,45 @@ async function establishWebRTCConnection() {
     await peerConnection.setLocalDescription(offer)
     socket.emit("offer", offer)
 }
+
+function handleMotionEvent(e) {
+    const acceleration = e.acceleration
+
+    if (
+        acceleration.x > motionThreshold ||
+        acceleration.y > motionThreshold ||
+        acceleration.z > motionThreshold
+    ) {
+        if (!isFlickDetected) {
+            isFlickDetected = true
+            if (dataChannel) {
+                dataChannel.send("jump")
+            }
+        }
+    } else {
+        isFlickDetected = false
+    }
+}
+
+function enableMotionDetection() {
+    if (typeof DeviceMotionEvent.requestPermission === "function") {
+        DeviceMotionEvent.requestPermission().then((permissionState) => {
+            if (permissionState === "granted") {
+                hideEnableButton()
+                window.addEventListener("devicemotion", handleMotionEvent, true)
+            }
+        })
+    } else {
+        hideEnableButton()
+        window.addEventListener("devicemotion", handleMotionEvent, true)
+    }
+}
+
+function showEnableButton() {
+    enableMotionContainer.style.display = "block"
+}
+function hideEnableButton() {
+    enableMotionContainer.style.display = "none"
+}
+
+enableMotionButton.addEventListener("click", enableMotionDetection)
