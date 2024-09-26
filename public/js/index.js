@@ -51,10 +51,8 @@ function hideQR() {
 // Handle receiving a data channel
 peerConnection.ondatachannel = (event) => {
     dataChannel = event.channel
-    dataChannel.onopen = () => console.log("Data channel opened")
     dataChannel.onmessage = (event) => {
         if (event.data === "jump") {
-            console.log("jump")
             jump()
         }
     }
@@ -78,5 +76,4 @@ socket.on("offer", async (offer) => {
     const answer = await peerConnection.createAnswer()
     await peerConnection.setLocalDescription(answer)
     socket.emit("answer", answer) // Send answer back to controller
-    console.log("Answer sent")
 })

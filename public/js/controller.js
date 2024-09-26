@@ -32,13 +32,9 @@ socket.on("disconnected", () => {
 function createDataChannel() {
     dataChannel = peerConnection.createDataChannel("channel")
     dataChannel.onopen = () => {
-        console.log("Data channel opened")
         document.addEventListener("click", () => {
             dataChannel.send("jump")
         })
-    }
-    dataChannel.onmessage = (event) => {
-        console.log(event.data)
     }
 }
 
@@ -52,7 +48,6 @@ peerConnection.onicecandidate = (event) => {
 // Handle receiving an answer
 socket.on("answer", async (answer) => {
     await peerConnection.setRemoteDescription(new RTCSessionDescription(answer))
-    console.log("Remote description set (answer)")
 })
 
 // Handle ICE candidates from the peer

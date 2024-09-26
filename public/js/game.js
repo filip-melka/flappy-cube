@@ -161,7 +161,6 @@ function clear() {
 }
 
 function gameOver() {
-    console.log("game over")
     isGameReady = false
     isGameRunning = false
     clearInterval(interval)
