@@ -92,10 +92,13 @@ function updateObstacles() {
     for (let obstacle of obstacles) {
         if (obstacle.posX < -50) {
             obstacles.shift()
-            spawnObstacle(3 * obstcleSpacing)
         } else {
             obstacle.posX -= speed
         }
+    }
+
+    if (obstacles && obstacles[obstacles.length - 1].posX <= width) {
+        spawnObstacle(obstacles[obstacles.length - 1].posX + obstcleSpacing)
     }
 }
 
