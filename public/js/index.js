@@ -1,15 +1,33 @@
+const socket = io()
 const gameCanvas = document.getElementById("game")
 const qrCode = document.getElementById("qr-code")
 
+socket.on("connect", () => {
+    createQRCode(socket.id)
+    showQR()
+
+    // for testing
+    qrCode.addEventListener("click", () => {
+        window
+            .open(
+                window.location.href + "controller.html?socketId=" + socket.id,
+                "_blank"
+            )
+            .focus()
+    })
+})
+
+socket.on("connected", () => {
+    hideQR()
+})
+
 function createQRCode(socketId) {
     new QRCode("qr-code", {
-        text: window.location.href + "?socketId=" + socketId,
+        text: window.location.href + "controller.html?socketId=" + socketId,
         width: 180,
         height: 180,
     })
 }
-
-createQRCode("abc")
 
 function showQR() {
     gameCanvas.style.display = "none"
@@ -21,9 +39,3 @@ function hideQR() {
     qrCode.style.display = "none"
     qrCode.innerHTML = ""
 }
-
-showQR()
-
-setTimeout(() => {
-    hideQR()
-}, 2000)
