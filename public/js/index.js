@@ -53,7 +53,10 @@ peerConnection.ondatachannel = (event) => {
     dataChannel = event.channel
     dataChannel.onopen = () => console.log("Data channel opened")
     dataChannel.onmessage = (event) => {
-        console.log(event.data)
+        if (event.data === "jump") {
+            console.log("jump")
+            jump()
+        }
     }
 }
 

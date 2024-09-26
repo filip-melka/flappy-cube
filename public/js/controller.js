@@ -31,7 +31,12 @@ socket.on("disconnected", () => {
 // Create a data channel and set up event listeners
 function createDataChannel() {
     dataChannel = peerConnection.createDataChannel("channel")
-    dataChannel.onopen = () => console.log("Data channel opened")
+    dataChannel.onopen = () => {
+        console.log("Data channel opened")
+        document.addEventListener("click", () => {
+            dataChannel.send("jump")
+        })
+    }
     dataChannel.onmessage = (event) => {
         console.log(event.data)
     }
