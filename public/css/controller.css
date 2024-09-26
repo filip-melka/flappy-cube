@@ -40,3 +40,23 @@ main > img {
     width: 40vw;
     max-width: 200px;
 }
+
+#enable-container {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 30px;
+}
+
+#enable-btn {
+    width: 100%;
+    color: var(--primary);
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    background: var(--white);
+    border-radius: 8px;
+}

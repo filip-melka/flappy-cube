@@ -16,6 +16,8 @@ socket.on("connect", () => {
         window.history.replaceState({}, document.title, newUrl)
 
         socket.emit("pair", socketId)
+    } else {
+        statusDisplay.className = "disconnected"
     }
 })
 
