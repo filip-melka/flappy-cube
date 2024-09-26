@@ -37,16 +37,6 @@ let dataChannel
 socket.on("connect", () => {
     createQRCode(socket.id)
     showQR()
-
-    // for testing
-    qrCode.addEventListener("click", () => {
-        window
-            .open(
-                window.location.href + "controller.html?socketId=" + socket.id,
-                "_blank"
-            )
-            .focus()
-    })
 })
 
 socket.on("connected", () => {
