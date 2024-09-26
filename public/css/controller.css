@@ -1,0 +1,42 @@
+@import "shared.css";
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+    height: 6rem;
+}
+
+nav > img {
+    width: 40px;
+}
+
+#connection-status {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+#connection-status.connecting {
+    background: rgb(250, 172, 26);
+}
+#connection-status.connected {
+    background: rgb(112, 239, 112);
+}
+#connection-status.disconnected {
+    background: rgb(254, 146, 146);
+}
+
+main {
+    min-height: calc(100vh - 6rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 6rem;
+    box-sizing: border-box;
+}
+
+main > img {
+    width: 40vw;
+    max-width: 200px;
+}

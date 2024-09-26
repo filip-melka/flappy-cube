@@ -1,16 +1,7 @@
-:root {
-    --primary: #716fe5;
-    --primary-dark: #4341a4;
-    --white: white;
-    --text: rgb(42, 42, 42);
-    --canvas-width: 600px;
-}
+@import "shared.css";
 
-body {
-    font-family: sans-serif;
-    background: var(--primary);
-    color: var(--white);
-    margin: 0;
+:root {
+    --canvas-width: 600px;
 }
 
 nav {
