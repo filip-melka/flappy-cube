@@ -5,7 +5,7 @@ const enableMotionButton = document.getElementById("enable-btn")
 const peerConnection = new RTCPeerConnection({
     iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 })
-const motionThreshold = 15
+const motionThreshold = 10
 
 let dataChannel
 let isFlickDetected = false
@@ -39,9 +39,6 @@ function createDataChannel() {
     dataChannel = peerConnection.createDataChannel("channel")
     dataChannel.onopen = () => {
         showEnableButton()
-        document.addEventListener("click", () => {
-            dataChannel.send("jump")
-        })
     }
 }
 
