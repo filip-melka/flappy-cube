@@ -13,10 +13,7 @@ app.use(express.static("public"))
 const pairs = new Map()
 
 io.on("connection", (socket) => {
-    console.log("A user connected:", socket.id)
-
     socket.on("pair", (partnerSocketId) => {
-        console.log("pair")
         pairs.set(socket.id, partnerSocketId)
         pairs.set(partnerSocketId, socket.id)
 
