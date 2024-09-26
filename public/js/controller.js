@@ -16,3 +16,7 @@ socket.on("connect", () => {
 socket.on("connected", () => {
     statusDisplay.className = "connected"
 })
+
+socket.on("disconnected", () => {
+    statusDisplay.className = "disconnected"
+})

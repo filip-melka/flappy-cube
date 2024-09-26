@@ -23,6 +23,15 @@ io.on("connection", (socket) => {
         io.to(partnerSocketId).emit("connected")
         socket.emit("connected")
     })
+
+    socket.on("disconnect", () => {
+        const partnerSocketId = pairs.get(socket.id)
+        if (partnerSocketId) {
+            io.to(partnerSocketId).emit("disconnected")
+            pairs.delete(socket.id)
+            pairs.delete(partnerSocketId)
+        }
+    })
 })
 
 server.listen(3000, () => {

@@ -21,6 +21,10 @@ socket.on("connected", () => {
     hideQR()
 })
 
+socket.on("disconnected", () => {
+    showQR()
+})
+
 function createQRCode(socketId) {
     new QRCode("qr-code", {
         text: window.location.href + "controller.html?socketId=" + socketId,
@@ -37,5 +41,4 @@ function showQR() {
 function hideQR() {
     gameCanvas.style.display = "block"
     qrCode.style.display = "none"
-    qrCode.innerHTML = ""
 }
