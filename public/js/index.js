@@ -2,7 +2,7 @@ const socket = io()
 const gameCanvas = document.getElementById("game")
 const qrCode = document.getElementById("qr-code")
 
-socket.on("connect", () => {
+/* socket.on("connect", () => {
     createQRCode(socket.id)
     showQR()
 
@@ -15,7 +15,7 @@ socket.on("connect", () => {
             )
             .focus()
     })
-})
+}) */
 
 socket.on("connected", () => {
     hideQR()
@@ -42,3 +42,5 @@ function hideQR() {
     gameCanvas.style.display = "block"
     qrCode.style.display = "none"
 }
+
+hideQR()

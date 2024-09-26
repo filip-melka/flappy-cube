@@ -13,13 +13,13 @@ const colors = {
     obstacle: "#ccc",
 }
 
-const gravity = 0.12
-const jumpForce = 6
-const cornerRadius = 10
+const gravity = 0.25
+const jumpForce = 7
+const cornerRadius = 9
 const speed = 5
 
 let obstacles = []
-let obstacleGapHeight = 400
+let obstacleGapHeight = 280
 const obstcleSpacing = 400
 
 let isGameRunning = false
@@ -31,8 +31,8 @@ let bestScore = localStorage.getItem("bestScore") || 0
 updateBestScoreDisplay()
 
 const player = {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     posY: height / 3,
     posX: 100,
     velocityY: 0,
@@ -139,7 +139,7 @@ function start() {
     drawPlayer()
 
     obstacles = []
-    new Array(1, 2, 3).forEach((i) => spawnObstacle(i * obstcleSpacing))
+    new Array(2, 3).forEach((i) => spawnObstacle(i * obstcleSpacing))
     drawObstacles()
 
     isGameReady = true
@@ -201,7 +201,7 @@ function updatePlayer() {
                 player.posY <= obstacle.spaceTop ||
                 player.posY >= obstacle.spaceBottom - player.height
             ) {
-                console.log("collision")
+                gameOver()
             }
         }
 
