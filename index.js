@@ -24,6 +24,27 @@ io.on("connection", (socket) => {
         socket.emit("connected")
     })
 
+    socket.on("offer", (offer) => {
+        const partnerSocketId = pairs.get(socket.id)
+        if (partnerSocketId) {
+            io.to(partnerSocketId).emit("offer", offer)
+        }
+    })
+
+    socket.on("answer", (offer) => {
+        const partnerSocketId = pairs.get(socket.id)
+        if (partnerSocketId) {
+            io.to(partnerSocketId).emit("answer", offer)
+        }
+    })
+
+    socket.on("ice-candidate", (candidate) => {
+        const partnerSocketId = pairs.get(socket.id)
+        if (partnerSocketId) {
+            io.to(partnerSocketId).emit("ice-candidate", candidate)
+        }
+    })
+
     socket.on("disconnect", () => {
         const partnerSocketId = pairs.get(socket.id)
         if (partnerSocketId) {

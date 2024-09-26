@@ -1,8 +1,13 @@
 const socket = io()
 const gameCanvas = document.getElementById("game")
 const qrCode = document.getElementById("qr-code")
+const peerConnection = new RTCPeerConnection({
+    iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+})
 
-/* socket.on("connect", () => {
+let dataChannel
+
+socket.on("connect", () => {
     createQRCode(socket.id)
     showQR()
 
@@ -15,7 +20,7 @@ const qrCode = document.getElementById("qr-code")
             )
             .focus()
     })
-}) */
+})
 
 socket.on("connected", () => {
     hideQR()
@@ -43,4 +48,32 @@ function hideQR() {
     qrCode.style.display = "none"
 }
 
-hideQR()
+// Handle receiving a data channel
+peerConnection.ondatachannel = (event) => {
+    dataChannel = event.channel
+    dataChannel.onopen = () => console.log("Data channel opened")
+    dataChannel.onmessage = (event) => {
+        console.log(event.data)
+    }
+}
+
+// Handle ICE candidate generation
+peerConnection.onicecandidate = (event) => {
+    if (event.candidate) {
+        socket.emit("ice-candidate", event.candidate)
+    }
+}
+
+// Handle ICE candidates from the controller
+socket.on("ice-candidate", (candidate) => {
+    peerConnection.addIceCandidate(new RTCIceCandidate(candidate))
+})
+
+// Handle receiving an offer
+socket.on("offer", async (offer) => {
+    await peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
+    const answer = await peerConnection.createAnswer()
+    await peerConnection.setLocalDescription(answer)
+    socket.emit("answer", answer) // Send answer back to controller
+    console.log("Answer sent")
+})
