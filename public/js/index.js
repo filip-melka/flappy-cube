@@ -48,11 +48,13 @@ socket.on("disconnected", () => {
 })
 
 function createQRCode(socketId) {
-    new QRCode("qr-code", {
-        text: window.location.href + "controller.html?socketId=" + socketId,
-        width: 180,
-        height: 180,
-    })
+    if (qrCode.childNodes.length === 0) {
+        new QRCode("qr-code", {
+            text: window.location.href + "controller.html?socketId=" + socketId,
+            width: 180,
+            height: 180,
+        })
+    }
 }
 
 function showQR() {
