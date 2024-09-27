@@ -32,7 +32,7 @@ const peerConnection = new RTCPeerConnection({
         },
     ],
 })
-const motionThreshold = 7
+const motionThreshold = 5
 
 let dataChannel
 let isFlickDetected = false
